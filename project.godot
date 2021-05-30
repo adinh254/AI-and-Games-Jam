@@ -9,18 +9,55 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area2D",
+"class": "Building",
+"language": "GDScript",
+"path": "res://src/buildings/building.gd"
+}, {
+"base": "Camera2D",
+"class": "DynamicCamera",
+"language": "GDScript",
+"path": "res://src/main/dynamic_camera.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Entity",
 "language": "GDScript",
 "path": "res://src/entity/entity.gd"
+}, {
+"base": "Node2D",
+"class": "Gun",
+"language": "GDScript",
+"path": "res://src/equipment/gun/gun.gd"
+}, {
+"base": "Building",
+"class": "HomeBase",
+"language": "GDScript",
+"path": "res://src/buildings/home_base/home_base.gd"
+}, {
+"base": "Area2D",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://src/entity/projectile/projectile.gd"
+}, {
+"base": "Node2D",
+"class": "Turret",
+"language": "GDScript",
+"path": "res://src/equipment/mountings/turret.gd"
 } ]
 _global_script_class_icons={
-"Entity": ""
+"Building": "",
+"DynamicCamera": "",
+"Entity": "",
+"Gun": "",
+"HomeBase": "",
+"Projectile": "",
+"Turret": ""
 }
 
 [application]
 
 config/name="ai-and-games-jam"
+run/main_scene="res://src/main/main.tscn"
 config/icon="res://icon.png"
 
 [display]
@@ -29,6 +66,19 @@ window/size/width=1920
 window/size/height=1080
 window/size/borderless=true
 window/stretch/mode="2d"
+
+[input]
+
+cam_zoom_in={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+cam_zoom_out={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
 
 [physics]
 

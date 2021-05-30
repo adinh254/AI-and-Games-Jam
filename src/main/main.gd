@@ -1,6 +1,8 @@
 extends Node2D
 
 
+onready var home: Building = $HomeBase
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
