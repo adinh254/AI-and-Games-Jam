@@ -28,15 +28,14 @@ func _process(_delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	set_physics_process(!pointer_disabled)
-	var delta_speed: float = sign(_target_x_pos) * pointer_speed * delta
+	var ba: float = _target_x_pos - pointer.position.x
+	var delta_speed: float = sign(ba) * pointer_speed * delta
 	# a = pointer.positioin.x; b = _target_x_pos; c = pointer.position.x + delta_speed
 	var c: float = pointer.position.x + delta_speed
-	var bc: float = _target_x_pos - c
-	var ba: float = _target_x_pos - pointer.position.x
+	var bc: float = c - _target_x_pos
 	var final_x_pos: float = c
-	if ba * bc < 0: # If the c goes past the target.
-		if abs(bc) < abs(delta_speed):
-			final_x_pos = _target_x_pos
+	if abs(bc) < abs(delta_speed):
+		final_x_pos = _target_x_pos
 	if final_x_pos < muzzle.position.x:
 		final_x_pos = muzzle.position.x
 	elif final_x_pos > max_range:
