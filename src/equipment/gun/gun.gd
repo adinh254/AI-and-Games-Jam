@@ -13,9 +13,7 @@ export var max_range: float = 2000.0
 export(Color) var pointer_collision_color = Color.white
 #export(Color) var pointer_max_distance_color = Color(1.0, 1.0, 1.0, 0.3)
 export(Color) var pointer_min_distance_color = Color(1.0, 1.0, 1.0, 0.3)
-var _pointer_x_pos := Vector2.ONE setget private_set
-onready var _max_x_threshold: float = max_range - pointer_speed setget private_set
-onready var _min_x_threshold: float = muzzle.position.x + pointer_speed setget private_set
+var _target_x_pos: float setget private_set
 
 
 func _ready() -> void:
@@ -25,16 +23,23 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	set_process(!pointer_disabled)
 	pointer.visible = !pointer_disabled
-	_pointer_x_pos = to_local(get_global_mouse_position())
+	_target_x_pos = to_local(get_global_mouse_position()).x
 
 
 func _physics_process(delta: float) -> void:
 	set_physics_process(!pointer_disabled)
-	var delta_speed: float = sign(_pointer_x_pos.x) * pointer_speed * delta
-	var final_x_pos: float = pointer.position.x + delta_speed
-	if _pointer_x_dir == -1 && final_x_pos < _min_x_threshold:
-		pointer.position.x = muzzle.position.x
-	elif _pointer_x_dir == 1 && final_x_pos > _max_x_threshold:
+	var delta_speed: float = sign(_target_x_pos) * pointer_speed * delta
+	# a = pointer.positioin.x; b = _target_x_pos; c = pointer.position.x + delta_speed
+	var c: float = pointer.position.x + delta_speed
+	var bc: float = _target_x_pos - c
+	var ba: float = _target_x_pos - pointer.position.x
+	var final_x_pos: float = c
+	if ba * bc < 0: # If the c goes past the target.
+		if abs(bc) < abs(delta_speed):
+			final_x_pos = _target_x_pos
+	if final_x_pos < muzzle.position.x:
+		final_x_pos = muzzle.position.x
+	elif final_x_pos > max_range:
 		pointer.position.x = max_range
 	else:
 		pointer.position.x = final_x_pos
