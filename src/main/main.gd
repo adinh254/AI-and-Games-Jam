@@ -32,7 +32,7 @@ func createSpawner():
 	
 	new_spawner.set_position(Vector2(10, 10))
 
-	#new_spanwer.spawn_enemies(
-	#	random_generator.randi_range(5, 10),
-	#	Vector2(random_generator_x, random_generator_y)
-	#)
+	new_spawner.spawn_enemies(
+		random_generator.randi_range(5, 10),
+		Vector2(random_generator_x, random_generator_y)
+	)

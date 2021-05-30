@@ -9,3 +9,4 @@ script = ExtResource( 1 )
 [node name="RegularPolygon2D" type="Node2D" parent="."]
 script = ExtResource( 2 )
 centered = true
+polygon_color = Color( 0.776471, 0.141176, 0.141176, 1 )
