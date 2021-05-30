@@ -27,10 +27,8 @@ func createSpawner():
 	var random_generator = RandomNumberGenerator.new()
 	var random_generator_x = random_generator.randi_range(64, screen_size.x - 64)
 	var random_generator_y = random_generator.randi_range(64, screen_size.y - 64)
-	
-	new_spanwer.set_position(Vector2(10, 10))
 
-	#new_spanwer.spawn_enemies(
-	#	random_generator.randi_range(5, 10),
-	#	Vector2(random_generator_x, random_generator_y)
-	#)
+	new_spanwer.spawn_enemies(
+		random_generator.randi_range(5, 10),
+		Vector2(random_generator_x, random_generator_y)
+	)

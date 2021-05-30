@@ -18,6 +18,9 @@ func spawn_enemies(enemies: int, initial_position: Vector2) -> void:
 		var new_enemy: Enemy = Enemy.instance()
 		
 		new_enemy.rotate(angle)
+		
+		add_child(new_enemy)
+		
 
 func get_closest_turret(unit_position: Vector2) -> Vector2:
 	# we would like to return the closest turret
