@@ -1,8 +1,6 @@
 class_name Spawner
-
 extends Node2D
 
-var Enemy: = preload("res://src/entity/enemy/enemy.tscn")
 
 func get_path_direction(unit_position: Vector2) -> Vector2:
 	return get_closest_turret(unit_position)
