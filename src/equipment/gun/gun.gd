@@ -3,7 +3,7 @@ extends Node2D
 
 signal fire
 
-const projectile_type := preload("res://src/entity/projectile/projectile.tscn")
+const Projectile := preload("res://src/entity/projectile/projectile.tscn")
 
 onready var muzzle: Position2D = $Muzzle
 onready var pointer: Sprite = $Pointer
@@ -30,7 +30,7 @@ func _physics_process(delta: float) -> void:
 	set_physics_process(!pointer_disabled)
 	var ba: float = _target_x_pos - pointer.position.x
 	var delta_speed: float = sign(ba) * pointer_speed * delta
-	# a = pointer.positioin.x; b = _target_x_pos; c = pointer.position.x + delta_speed
+	# a = pointer.position.x; b = _target_x_pos; c = pointer.position.x + delta_speed
 	var c: float = pointer.position.x + delta_speed
 	var bc: float = c - _target_x_pos
 	var final_x_pos: float = c
@@ -49,7 +49,7 @@ func set_pointer_disabled(p_disabled: bool) -> void:
 
 
 func fire() -> void:
-	emit_signal("fire", projectile_type, muzzle.global_transform)
+	emit_signal("fire", Projectile, muzzle.global_transform)
 
 
 func private_set(_value=null):

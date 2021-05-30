@@ -14,3 +14,8 @@ position = Vector2( 960, 540 )
 position = Vector2( 960, 540 )
 current = true
 script = ExtResource( 3 )
+
+[connection signal="fire" from="HomeBase/Turret/Hardpoint/Gun" to="." method="_on_Gun_fire"]
+
+[editable path="HomeBase"]
+[editable path="HomeBase/Turret"]

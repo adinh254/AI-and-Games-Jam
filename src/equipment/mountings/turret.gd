@@ -8,11 +8,17 @@ export var rotation_speed: float = 100.0
 export var look_at_mouse: bool = false setget set_look_at_mouse
 var _delta_angle: float = 0.0 setget private_set
 onready var hard_point: Position2D = $Hardpoint
+onready var gun: Gun = hard_point.get_node("Gun")
 
 
 func _ready() -> void:
 	# Convert properties to usable units.
 	rotation_speed = deg2rad(rotation_speed)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_fire"):
+		gun.fire()
 
 
 func _process(_delta: float) -> void:
@@ -29,6 +35,8 @@ func _physics_process(delta: float) -> void:
 func set_look_at_mouse(p_process_state: bool) -> void:
 	# Sets _process state for whether the turret auto rotates towards the cursor.
 	set_process(p_process_state)
+	set_physics_process(p_process_state)
+	set_process_unhandled_input(p_process_state)
 
 
 func _rotate_turret(p_rotation_speed: float) -> void: 
