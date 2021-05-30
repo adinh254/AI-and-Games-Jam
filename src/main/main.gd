@@ -1,22 +1,14 @@
 extends Node2D
 
+var Spawner: = preload("res://src/entity/spawner/spawner.tscn")
 
 onready var home: Building = $HomeBase
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
+	# This should be on a timer maybe?
+	createSpawner()
+	
+	pass
 
 func _on_Gun_fire(Projectile, p_global_transform: Transform2D) -> void:
 	# https://docs.godotengine.org/en/stable/tutorials/misc/instancing_with_signals.html?highlight=bullet#shooting-example
@@ -25,3 +17,20 @@ func _on_Gun_fire(Projectile, p_global_transform: Transform2D) -> void:
 	var projectile_rotation: float = p_global_transform.get_rotation()
 	new_projectile.global_transform = p_global_transform
 	new_projectile.set_direction(Vector2(cos(projectile_rotation), sin(projectile_rotation)))
+
+func createSpawner():
+	var new_spanwer: Spawner = Spawner.instance()
+	
+	add_child(new_spanwer)
+
+	var screen_size = get_viewport_rect().size
+	var random_generator = RandomNumberGenerator.new()
+	var random_generator_x = random_generator.randi_range(64, screen_size.x - 64)
+	var random_generator_y = random_generator.randi_range(64, screen_size.y - 64)
+	
+	new_spanwer.set_position(Vector2(10, 10))
+
+	#new_spanwer.spawn_enemies(
+	#	random_generator.randi_range(5, 10),
+	#	Vector2(random_generator_x, random_generator_y)
+	#)

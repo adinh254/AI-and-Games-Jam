@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://src/main/dynamic_camera.gd"
 }, {
 "base": "KinematicBody2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://src/entity/enemy/enemy.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Entity",
 "language": "GDScript",
 "path": "res://src/entity/entity.gd"
@@ -40,6 +45,11 @@ _global_script_classes=[ {
 "path": "res://src/entity/projectile/projectile.gd"
 }, {
 "base": "Node2D",
+"class": "Spawner",
+"language": "GDScript",
+"path": "res://src/entity/spawner/spawner.gd"
+}, {
+"base": "Node2D",
 "class": "Turret",
 "language": "GDScript",
 "path": "res://src/equipment/mountings/turret.gd"
@@ -47,10 +57,12 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Building": "",
 "DynamicCamera": "",
+"Enemy": "",
 "Entity": "",
 "Gun": "",
 "HomeBase": "",
 "Projectile": "",
+"Spawner": "",
 "Turret": ""
 }
 
@@ -70,6 +82,10 @@ window/stretch/mode="2d"
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/regular_polygon2d_node/plugin.cfg" )
+
+[global]
+
+fullscreen=false
 
 [input]
 
