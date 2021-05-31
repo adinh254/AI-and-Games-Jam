@@ -35,10 +35,9 @@ func set_interest():
 	var parent = get_parent()
 	
 	if parent and parent.has_method("get_path_direction"):
-		var path_direction = parent.get_path_direction(position)
-
+		var path_global_dir = parent.get_path_direction(global_position)
 		for i in num_rays:
-			var direction = ray_directions[i].rotated(rotation).dot(path_direction)
+			var direction = ray_directions[i].rotated(global_rotation).dot(path_global_dir)
 			
 			interest[i] = direction
 	else:
