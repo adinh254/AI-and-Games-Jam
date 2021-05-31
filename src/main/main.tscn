@@ -14,8 +14,13 @@ position = Vector2( 960, 540 )
 position = Vector2( 960, 540 )
 current = true
 script = ExtResource( 3 )
+zoom_disabled = true
+min_zoom = Vector2( 1, 1 )
+zoom_steps = 1
 
 [connection signal="fire" from="HomeBase/Turret/Hardpoint/Gun" to="." method="_on_Gun_fire"]
+[connection signal="zoom_in" from="DynamicCamera" to="HomeBase/Turret/Hardpoint/Gun" method="_on_DynamicCamera_zoom_in"]
+[connection signal="zoom_out" from="DynamicCamera" to="HomeBase/Turret/Hardpoint/Gun" method="_on_DynamicCamera_zoom_out"]
 
 [editable path="HomeBase"]
 [editable path="HomeBase/Turret"]

@@ -9,6 +9,11 @@ enum Modes {
 }
 # TODO: Different minimum/maximum zoom distances depending on node type.
 # TODO: Camera UI Settings.
+
+signal zoom_in
+signal zoom_out
+
+export var zoom_disabled: bool = false setget set_zoom_disabled
 export(Vector2) var min_zoom = Vector2(0.1, 0.1) setget set_min_zoom
 export(Vector2) var max_zoom = Vector2(1.0, 1.0) setget set_max_zoom
 export(int) var zoom_steps = 10
@@ -16,6 +21,7 @@ export(int) var zoom_steps = 10
 var _mode: int = Modes.FREE setget private_set
 var _zoom_step: float = 5.0 setget private_set
 var _target: Node2D setget private_set
+
 
 func _ready() -> void:
 	process_mode = Camera2D.CAMERA2D_PROCESS_IDLE
@@ -27,12 +33,13 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("cam_zoom_in"):
-		if _zoom_step > 0:
-			decrement_zoom()
-	if event.is_action_pressed("cam_zoom_out"):
-		if _zoom_step < zoom_steps:
-			increment_zoom()
+	if !zoom_disabled:
+		if event.is_action_pressed("cam_zoom_in"):
+			if _zoom_step > 0:
+				decrement_zoom()
+		if event.is_action_pressed("cam_zoom_out"):
+			if _zoom_step < zoom_steps:
+				increment_zoom()
 
 
 func _physics_process(_delta: float) -> void:
@@ -65,16 +72,22 @@ func get_camera_screen_rect() -> Rect2:
 #		pass
 
 
+func set_zoom_disabled(p_disabled: bool) -> void:
+	zoom_disabled = p_disabled
+
+
 func increment_zoom() -> void:
 	# Increments the zoom by a step. The camera moves "farther" out.
 	_zoom_step += 1
 	zoom = get_stepped_zoom()
+	emit_signal("zoom_in", zoom)
 
 
 func decrement_zoom() -> void:
 	# Decrements the zoom by a step. The camera moves "closer" in.
 	_zoom_step -= 1
 	zoom = get_stepped_zoom()
+	emit_signal("zoom_out", zoom)
 
 
 func get_stepped_zoom() -> Vector2:

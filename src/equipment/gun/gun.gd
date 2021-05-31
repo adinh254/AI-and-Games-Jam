@@ -3,10 +3,10 @@ extends Node2D
 
 signal fire
 
-const Projectile := preload("res://src/entity/projectile/projectile.tscn")
+const Plasma := preload("res://src/entity/projectile/plasma/plasma.tscn")
+const SentryBox := preload("res://src/entity/projectile/sentry_box/sentry_box.tscn")
 
-onready var muzzle: Position2D = $Muzzle
-onready var pointer: Sprite = $Pointer
+export var projectile_type: PackedScene = Plasma
 export var pointer_disabled: bool = true setget set_pointer_disabled
 export var pointer_speed: float = 500.0
 export var max_range: float = 2000.0
@@ -14,6 +14,8 @@ export(Color) var pointer_collision_color = Color.white
 #export(Color) var pointer_max_distance_color = Color(1.0, 1.0, 1.0, 0.3)
 export(Color) var pointer_min_distance_color = Color(1.0, 1.0, 1.0, 0.3)
 var _target_x_pos: float setget private_set
+onready var muzzle: Position2D = $Muzzle
+onready var pointer: Sprite = $Pointer
 
 
 func _ready() -> void:
@@ -49,7 +51,15 @@ func set_pointer_disabled(p_disabled: bool) -> void:
 
 
 func fire() -> void:
-	emit_signal("fire", Projectile, muzzle.global_transform)
+	emit_signal("fire", projectile_type, muzzle.global_transform, pointer.global_position)
+
+
+#func _on_DynamicCamera_zoom_in(p_zoom: Vector2) -> void:
+#	pointer.global_scale = p_zoom
+#
+#
+#func _on_DynamicCamera_zoom_out(p_zoom: Vector2) -> void:
+#	pointer.global_scale = p_zoom
 
 
 func private_set(_value=null):

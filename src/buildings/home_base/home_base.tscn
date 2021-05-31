@@ -4,5 +4,6 @@
 [ext_resource path="res://src/equipment/mountings/turret.tscn" type="PackedScene" id=2]
 
 [node name="HomeBase" instance=ExtResource( 1 )]
+modulate = Color( 0.109804, 0.764706, 0.596078, 1 )
 
 [node name="Turret" parent="." index="2" instance=ExtResource( 2 )]

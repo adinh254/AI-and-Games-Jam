@@ -27,5 +27,5 @@ func get_closest_turret(unit_position: Vector2) -> Vector2:
 	# we would like to return the closest turret
 	# for now we will return center
 	var point = get_viewport_rect().size / 2
-
+	
 	return Vector2(unit_position.x - point.x, unit_position.y - point.y)
