@@ -14,6 +14,8 @@ onready var base_gun: Gun = home.get_node("Turret/Hardpoint/Gun")
 func _ready():
 	# This should be on a timer maybe?
 	createSpawner()
+	createSpawner()
+	createSpawner()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -48,14 +50,17 @@ func _on_Projectile_hit_effect(p_effect: PackedScene, p_global_pos: Vector2) -> 
 func createSpawner():
 	var new_spawner: Spawner = SpawnerScene.instance()
 	
+	new_spawner.set_target(home)
+	
 	add_child(new_spawner)
 
 	var screen_size = get_viewport_rect().size
 	var random_generator = RandomNumberGenerator.new()
+	
+	random_generator.randomize()
+	
 	var random_generator_x = random_generator.randi_range(64, screen_size.x - 64)
 	var random_generator_y = random_generator.randi_range(64, screen_size.y - 64)
-	
-	new_spawner.set_position(Vector2(10, 10))
 
 	new_spawner.spawn_enemies(
 		random_generator.randi_range(5, 10),

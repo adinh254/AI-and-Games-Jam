@@ -32,11 +32,13 @@ func set_defualt_interest():
 		interest[i] = direction
 
 func set_interest():
-	if owner and owner.has_method("get_path_direction"):
-		var path_direction = owner.getpath_direction(position)
+	var parent = get_parent()
+	
+	if parent and parent.has_method("get_path_direction"):
+		var path_direction = parent.get_path_direction(position)
 
 		for i in num_rays:
-			var direction = ray_directions[i].rotate(rotation).dot(path_direction)
+			var direction = ray_directions[i].rotated(rotation).dot(path_direction)
 			
 			interest[i] = direction
 	else:
@@ -76,4 +78,4 @@ func _physics_process(delta: float) -> void:
 	velocity = velocity.linear_interpolate(desired_velocity, steer_force)
 	rotation = velocity.angle()
 
-	move_and_collide(velocity * delta)
+	var _movement = move_and_collide(velocity * delta)
