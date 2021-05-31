@@ -29,6 +29,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_Gun_fire(Projectile, p_global_transform: Transform2D, p_target_global_pos: Vector2) -> void:
 	# https://docs.godotengine.org/en/stable/tutorials/misc/instancing_with_signals.html?highlight=bullet#shooting-example
 	var new_projectile: Projectile = Projectile.instance()
+	new_projectile.connect("hit_effect", self, "_on_Projectile_hit_effect")
 	var spawn_global_pos: Vector2 = p_global_transform.get_origin()
 	add_child(new_projectile)
 	new_projectile.set_global_spawn_pos(spawn_global_pos)
@@ -36,6 +37,12 @@ func _on_Gun_fire(Projectile, p_global_transform: Transform2D, p_target_global_p
 	new_projectile.global_rotation = p_global_transform.get_rotation()
 	new_projectile.global_position = spawn_global_pos
 #	new_projectile.set_target_global_pos(p_target_global_pos)
+
+
+func _on_Projectile_hit_effect(p_effect: PackedScene, p_global_pos: Vector2) -> void:
+	var new_scene: Node2D = p_effect.instance()
+	add_child(new_scene)
+	new_scene.global_position = p_global_pos
 
 
 func createSpawner():

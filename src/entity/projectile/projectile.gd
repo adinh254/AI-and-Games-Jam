@@ -15,6 +15,8 @@ enum FlightMode {
 
 
 signal hit_effect
+
+export(PackedScene) var scene_effect
 export(PenetrationMode) var penetration_mode: int = PenetrationMode.SOFT
 export(FlightMode) var flight_mode: int = FlightMode.PERSISTENT
 export var speed: float = 500.0
@@ -28,8 +30,10 @@ func _physics_process(delta: float) -> void:
 	var new_pos: Vector2 = direction * speed * delta + position
 	match flight_mode:
 		FlightMode.LANDING:
-			if new_pos.distance_squared_to(_spawn_pos) >= _distance_to_travel:
-				new_pos = direction * sqrt(_distance_to_travel) + _spawn_pos
+			var distanced_traveled: float = new_pos.distance_squared_to(_spawn_pos)
+			if distanced_traveled >= _distance_to_travel:
+#				new_pos = direction * (distanced_traveled - _distance_to_travel) + _spawn_pos
+				emit_signal("hit_effect", scene_effect, global_position)
 				queue_free()
 			else:
 				continue

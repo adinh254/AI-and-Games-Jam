@@ -14,6 +14,8 @@ onready var gun: Gun = hard_point.get_node("Gun")
 func _ready() -> void:
 	# Convert properties to usable units.
 	rotation_speed = deg2rad(rotation_speed)
+	set_look_at_mouse(look_at_mouse)
+	
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -34,6 +36,7 @@ func _physics_process(delta: float) -> void:
 
 func set_look_at_mouse(p_process_state: bool) -> void:
 	# Sets _process state for whether the turret auto rotates towards the cursor.
+	look_at_mouse = p_process_state
 	set_process(p_process_state)
 	set_physics_process(p_process_state)
 	set_process_unhandled_input(p_process_state)

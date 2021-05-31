@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://src/entity/projectile/projectile.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/buildings/sentry/sentry.tscn" type="PackedScene" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 [node name="SentryBox" instance=ExtResource( 1 )]
 modulate = Color( 0.145098, 0.717647, 0.352941, 1 )
+scene_effect = ExtResource( 2 )
 penetration_mode = 3
 flight_mode = 1
 speed = 200.0
