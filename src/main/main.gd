@@ -30,9 +30,9 @@ func _on_Gun_fire(Projectile, p_global_transform: Transform2D, p_target_global_p
 	# https://docs.godotengine.org/en/stable/tutorials/misc/instancing_with_signals.html?highlight=bullet#shooting-example
 	var new_projectile: Projectile = Projectile.instance()
 	var spawn_global_pos: Vector2 = p_global_transform.get_origin()
+	add_child(new_projectile)
 	new_projectile.set_global_spawn_pos(spawn_global_pos)
 	new_projectile.set_distance_to_travel(spawn_global_pos.distance_to(p_target_global_pos))
-	add_child(new_projectile)
 	new_projectile.global_rotation = p_global_transform.get_rotation()
 	new_projectile.global_position = spawn_global_pos
 #	new_projectile.set_target_global_pos(p_target_global_pos)

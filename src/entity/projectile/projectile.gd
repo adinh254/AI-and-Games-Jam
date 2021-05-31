@@ -28,16 +28,17 @@ func _physics_process(delta: float) -> void:
 	var new_pos: Vector2 = direction * speed * delta + position
 	match flight_mode:
 		FlightMode.LANDING:
-			if new_pos.distance_squared_to(_spawn_pos - offset) >= _distance_to_travel:
-				new_pos = direction * sqrt(_distance_to_travel) + _spawn_pos - offset
+			if new_pos.distance_squared_to(_spawn_pos) >= _distance_to_travel:
+				new_pos = direction * sqrt(_distance_to_travel) + _spawn_pos
 				queue_free()
 			else:
 				continue
-	position = new_pos
+		_:
+			position = new_pos
 
 
 func set_global_spawn_pos(p_global_pos: Vector2) -> void:
-	_spawn_pos = to_local(p_global_pos)
+	_spawn_pos = to_local(p_global_pos) - offset
 
 
 func set_distance_to_travel(p_distance: float) -> void:
