@@ -3,22 +3,39 @@ extends Node2D
 const SpawnerScene := preload("res://src/entity/spawner/spawner.tscn")
 
 
+const Plasma := preload("res://src/entity/projectile/plasma/plasma.tscn")
+const SentryBox := preload("res://src/entity/projectile/sentry_box/sentry_box.tscn")
+
+
 onready var home: Building = $HomeBase
+onready var base_gun: Gun = home.get_node("Turret/Hardpoint/Gun")
 
 
 func _ready():
 	# This should be on a timer maybe?
 	createSpawner()
-	
-	pass
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ammo_1"):
+		base_gun.loaded_ammo_type = Plasma
+		print("Plasma Selected.")
+	elif event.is_action_pressed("ammo_2"):
+		base_gun.loaded_ammo_type = SentryBox
+		print("Sentry Selected.")
+
 
 
 func _on_Gun_fire(Projectile, p_global_transform: Transform2D, p_target_global_pos: Vector2) -> void:
 	# https://docs.godotengine.org/en/stable/tutorials/misc/instancing_with_signals.html?highlight=bullet#shooting-example
 	var new_projectile: Projectile = Projectile.instance()
+	var spawn_global_pos: Vector2 = p_global_transform.get_origin()
+	new_projectile.set_global_spawn_pos(spawn_global_pos)
+	new_projectile.set_distance_to_travel(spawn_global_pos.distance_to(p_target_global_pos))
 	add_child(new_projectile)
-	new_projectile.global_transform = p_global_transform
-	new_projectile.set_target_global_pos(p_target_global_pos)
+	new_projectile.global_rotation = p_global_transform.get_rotation()
+	new_projectile.global_position = spawn_global_pos
+#	new_projectile.set_target_global_pos(p_target_global_pos)
 
 
 func createSpawner():

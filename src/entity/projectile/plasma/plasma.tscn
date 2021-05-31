@@ -17,7 +17,10 @@ shape = SubResource( 1 )
 position = Vector2( 10, 8 )
 rect = Rect2( -10, -10, 26, 4 )
 
-[node name="Polygon2D" type="Polygon2D" parent="." index="2"]
+[node name="Offset" parent="." index="2"]
+position = Vector2( 13, 0 )
+
+[node name="Polygon2D" type="Polygon2D" parent="." index="3"]
 position = Vector2( 13, 0 )
 color = Color( 0.509804, 0.992157, 0.992157, 1 )
 polygon = PoolVector2Array( -12, -2, 12, -2, 13, 0, 12, 2, -12, 2, -13, 0 )

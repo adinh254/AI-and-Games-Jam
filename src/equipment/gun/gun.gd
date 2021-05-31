@@ -3,10 +3,7 @@ extends Node2D
 
 signal fire
 
-const Plasma := preload("res://src/entity/projectile/plasma/plasma.tscn")
-const SentryBox := preload("res://src/entity/projectile/sentry_box/sentry_box.tscn")
-
-export var projectile_type: PackedScene = Plasma
+export var loaded_ammo_type: PackedScene = preload("res://src/entity/projectile/plasma/plasma.tscn")
 export var pointer_disabled: bool = true setget set_pointer_disabled
 export var pointer_speed: float = 500.0
 export var max_range: float = 2000.0
@@ -51,7 +48,7 @@ func set_pointer_disabled(p_disabled: bool) -> void:
 
 
 func fire() -> void:
-	emit_signal("fire", projectile_type, muzzle.global_transform, pointer.global_position)
+	emit_signal("fire", loaded_ammo_type, muzzle.global_transform, pointer.global_position)
 
 
 #func _on_DynamicCamera_zoom_in(p_zoom: Vector2) -> void:

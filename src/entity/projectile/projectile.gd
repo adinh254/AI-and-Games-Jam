@@ -18,28 +18,30 @@ signal hit_effect
 export(PenetrationMode) var penetration_mode: int = PenetrationMode.SOFT
 export(FlightMode) var flight_mode: int = FlightMode.PERSISTENT
 export var speed: float = 500.0
-var target_global_pos := Vector2.ZERO setget set_target_global_pos
-var _target_pos := Vector2.ZERO setget private_set # Target global position converted to local coordinates.
-var _flight_dir := Vector2.ZERO setget private_set
+var _spawn_pos := Vector2() setget private_set 
+var _distance_to_travel: float = INF setget private_set # Distance to travel to before "landing".
+onready var offset: Vector2 = $Offset.position
 
 
 func _physics_process(delta: float) -> void:
-	var final_pos: Vector2 = _flight_dir * speed * delta + position
+	var direction: Vector2 = transform.basis_xform(Vector2.RIGHT)
+	var new_pos: Vector2 = direction * speed * delta + position
 	match flight_mode:
 		FlightMode.LANDING:
-			if final_pos >= _target_pos:
-				position = _target_pos
+			if new_pos.distance_squared_to(_spawn_pos - offset) >= _distance_to_travel:
+				new_pos = direction * sqrt(_distance_to_travel) + _spawn_pos - offset
+				queue_free()
 			else:
 				continue
-		_:
-			position = final_pos
+	position = new_pos
 
 
-func set_target_global_pos(p_global_pos: Vector2) -> void:
-	target_global_pos = p_global_pos
-	_target_pos = to_local(target_global_pos)
-	_flight_dir = position.direction_to(_target_pos)
-	rotation = get_angle_to(_target_pos)
+func set_global_spawn_pos(p_global_pos: Vector2) -> void:
+	_spawn_pos = to_local(p_global_pos)
+
+
+func set_distance_to_travel(p_distance: float) -> void:
+	_distance_to_travel = p_distance * p_distance
 
 
 func _on_VisibilityNotifier2D_screen_exited() -> void:
