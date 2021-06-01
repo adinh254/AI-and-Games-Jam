@@ -18,6 +18,12 @@ zoom_disabled = true
 min_zoom = Vector2( 1, 1 )
 zoom_steps = 1
 
+[node name="Path2D" type="Path2D" parent="."]
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2( 175, 105 )
+rotation = 1.8063
+
 [connection signal="fire" from="HomeBase/Turret/Hardpoint/Gun" to="." method="_on_Gun_fire"]
 
 [editable path="HomeBase"]

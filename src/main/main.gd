@@ -9,13 +9,14 @@ const SentryBox := preload("res://src/entity/projectile/sentry_box/sentry_box.ts
 
 onready var home: Building = $HomeBase
 onready var base_gun: Gun = home.get_node("Turret/Hardpoint/Gun")
+onready var path: Path2D = $Path2D
 
 
 func _ready():
 	# This should be on a timer maybe?
 	createSpawner()
-	createSpawner()
-	createSpawner()
+#	createSpawner()
+#	createSpawner()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -26,6 +27,26 @@ func _unhandled_input(event: InputEvent) -> void:
 		base_gun.loaded_ammo_type = SentryBox
 		print("Sentry Selected.")
 
+
+func createSpawner():
+	var new_spawner: Spawner = SpawnerScene.instance()
+	add_child(new_spawner)
+	new_spawner.set_path(path)
+	new_spawner.set_target(home)
+	
+
+	var screen_size = get_viewport_rect().size
+	var random_generator = RandomNumberGenerator.new()
+	
+	random_generator.randomize()
+	
+	var random_generator_x = random_generator.randi_range(64, screen_size.x - 64)
+	var random_generator_y = random_generator.randi_range(64, screen_size.y - 64)
+
+	new_spawner.spawn_enemies(
+		random_generator.randi_range(5, 10),
+		Vector2(random_generator_x, random_generator_y)
+	)
 
 
 func _on_Gun_fire(Projectile, p_global_transform: Transform2D, p_target_global_pos: Vector2) -> void:
@@ -45,24 +66,3 @@ func _on_Projectile_hit_effect(p_effect: PackedScene, p_global_pos: Vector2) -> 
 	var new_scene: Node2D = p_effect.instance()
 	add_child(new_scene)
 	new_scene.global_position = p_global_pos
-
-
-func createSpawner():
-	var new_spawner: Spawner = SpawnerScene.instance()
-	
-	new_spawner.set_target(home)
-	
-	add_child(new_spawner)
-
-	var screen_size = get_viewport_rect().size
-	var random_generator = RandomNumberGenerator.new()
-	
-	random_generator.randomize()
-	
-	var random_generator_x = random_generator.randi_range(64, screen_size.x - 64)
-	var random_generator_y = random_generator.randi_range(64, screen_size.y - 64)
-
-	new_spawner.spawn_enemies(
-		random_generator.randi_range(5, 10),
-		Vector2(random_generator_x, random_generator_y)
-	)
