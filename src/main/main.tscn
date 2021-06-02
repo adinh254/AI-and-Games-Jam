@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/main/main.gd" type="Script" id=1]
 [ext_resource path="res://src/buildings/home_base/home_base.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/main/dynamic_camera.gd" type="Script" id=3]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array(  )
+}
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -19,6 +24,7 @@ min_zoom = Vector2( 1, 1 )
 zoom_steps = 1
 
 [node name="Path2D" type="Path2D" parent="."]
+curve = SubResource( 1 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 position = Vector2( 175, 105 )
