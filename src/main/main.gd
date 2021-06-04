@@ -33,18 +33,18 @@ func createSpawner():
 	add_child(new_spawner)
 	new_spawner.set_path(path)
 	new_spawner.set_target(home)
-	
+
 
 	var screen_size = get_viewport_rect().size
 	var random_generator = RandomNumberGenerator.new()
-	
+
 	random_generator.randomize()
-	
+
 	var random_generator_x = random_generator.randi_range(64, screen_size.x - 64)
 	var random_generator_y = random_generator.randi_range(64, screen_size.y - 64)
 
 	new_spawner.spawn_enemies(
-		random_generator.randi_range(5, 10),
+		random_generator.randi_range(2, 2),
 		Vector2(random_generator_x, random_generator_y)
 	)
 

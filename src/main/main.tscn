@@ -6,7 +6,7 @@
 
 [sub_resource type="Curve2D" id=1]
 _data = {
-"points": PoolVector2Array(  )
+"points": PoolVector2Array( 0, 0, 0, 0, 385, 405, 0, 0, 0, 0, 380, 555, 0, 0, 0, 0, 610, 675, 0, 0, 0, 0, 930, 725, 0, 0, 0, 0, 1180, 725, 0, 0, 0, 0, 1465, 665, 0, 0, 0, 0, 1620, 535, 0, 0, 0, 0, 1615, 290, 0, 0, 0, 0, 1510, 205, 0, 0, 0, 0, 1315, 145, 0, 0, 0, 0, 995, 110, 0, 0, 0, 0, 810, 120, 0, 0, 0, 0, 625, 140, 0, 0, 0, 0, 385, 155, 80.9574, 39.685, -80.9574, -39.685, 240, 135, 0, 0, 0, 0, 280, 300, 0, 0, 0, 0, 385, 405 )
 }
 
 [node name="Main" type="Node2D"]
@@ -25,10 +25,6 @@ zoom_steps = 1
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource( 1 )
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2( 175, 105 )
-rotation = 1.8063
 
 [connection signal="fire" from="HomeBase/Turret/Hardpoint/Gun" to="." method="_on_Gun_fire"]
 

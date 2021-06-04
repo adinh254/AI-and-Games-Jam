@@ -28,5 +28,4 @@ func spawn_enemies(enemies: int, initial_position: Vector2) -> void:
 	
 	for i in enemies:
 		var new_enemy: Enemy = EnemyScene.instance()
-
 		add_child(new_enemy)
